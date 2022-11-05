@@ -1,3 +1,4 @@
+use self::hex_tile::Hex;
 use bevy::prelude::*;
 
 #[derive(Component, Debug)]
@@ -21,9 +22,9 @@ impl Plant {
     fn new(plant_type: Type, tile: Hex) -> Plant {
         Plant {
             lifetime: 0,
-            plant_type: plant_type,
+            plant_type,
             nourishment: 0.0,
-            tile: tile,
+            tile,
         }
     }
 

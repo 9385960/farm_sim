@@ -1,6 +1,6 @@
 mod hex_tile;
 
-let mut Vec<[f32;3]>
+let mut grid : Vec<[f32;3]> = Vec::new();
 
 fn render() {
 

@@ -1,12 +1,14 @@
+use std::f32::consts::PI;
+
 use crate::hex_outline::{self, add_outline};
 use bevy::{
-    prelude::*,
+    prelude::{*, shape::Quad},
     render::{mesh::Indices, render_resource::PrimitiveTopology},
 };
 
 use self::{
-    hex_tile::{Hex, INNER_RADIUS, OUTER_RADIUS},
-    vector::generate_hex_normals,
+    hex_tile::{Hex, INNER_RADIUS, OUTER_RADIUS, SQRT_3_OVER_2},
+    vector::{generate_hex_normals, vec_addition},
 };
 
 pub mod hex_tile;
@@ -14,6 +16,16 @@ pub mod vector;
 
 const ROWS: u32 = 5;
 const COLMUNS: u32 = 5;
+const THICKNESS: f32 = 0.1;
+
+const EDGES: [[f32; 3]; 6] = [
+    [-INNER_RADIUS, 0.0, 0.0],
+    [-INNER_RADIUS*0.5, 0.0, INNER_RADIUS*SQRT_3_OVER_2],
+    [INNER_RADIUS*0.5, 0.0, INNER_RADIUS*SQRT_3_OVER_2],
+    [INNER_RADIUS, 0.0, 0.0],
+    [INNER_RADIUS*0.5, 0.0, -INNER_RADIUS*SQRT_3_OVER_2],
+    [-INNER_RADIUS*0.5, 0.0, -INNER_RADIUS*SQRT_3_OVER_2],
+];
 
 #[derive(Component)]
 pub struct Hex_Map {
@@ -84,4 +96,36 @@ pub fn add_hex_map(
     commands.spawn_bundle(Map_Bundle {
         hex_map: create_tiles(),
     });
+
+    let map = create_tiles();
+
+    for i in 0..map.tiles.len()
+    {
+        for j in 0..map.tiles[0].len()
+        {
+            for k in 0..6
+            {
+                let position = vec_addition(map.tiles[i][j].get_center(),EDGES[k]);
+                commands.spawn_bundle(PbrBundle {
+                    mesh: meshes.add(Mesh::from(create_quad())),
+                    material: materials.add(StandardMaterial {
+                        base_color: Color::rgb(0.0, 0.0, 0.0),
+                        alpha_mode: AlphaMode::Blend,
+                        unlit: true,
+                        ..default()
+                    }),
+                    transform: Transform {
+                        translation: Vec3::new(position[0],position[1],position[2]),
+                        rotation: Quat::from_euler(EulerRot::XYZ, (PI/2.0), PI, PI/2.0),
+                        scale: Vec3::new(1.0, 1.0, 1.0),
+                    },
+                    ..default()
+                });
+            }
+        }
+    }
+}
+
+fn create_quad() -> Quad {
+    shape::Quad::new(Vec2::new(OUTER_RADIUS, THICKNESS))
 }

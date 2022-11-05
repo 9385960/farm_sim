@@ -46,7 +46,7 @@ pub fn add_outline(
                     }),
                     transform: Transform {
                         translation: Vec3::new(position[0],position[1],position[2]),
-                        rotation: Quat::from_euler(EulerRot::XYZ, (PI/2.0)+(PI*(k as f32)/3.0), PI, PI/2.0),
+                        rotation: Quat::from_euler(EulerRot::XYZ, (PI/2.0)-(PI*(k as f32)/3.0), 0.0, PI/2.0),
                         scale: Vec3::new(1.0, 1.0, 1.0),
                     },
                     ..default()

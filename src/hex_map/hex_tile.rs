@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use super::vector::vec_addition;
 
 pub const OUTER_RADIUS: f32 = 1.0;
-const SQRT_3_OVER_2: f32 = 0.86602540378443864676;
+pub const SQRT_3_OVER_2: f32 = 0.86602540378443864676;
 pub const INNER_RADIUS: f32 = OUTER_RADIUS * SQRT_3_OVER_2;
 
 const VERTS: [[f32; 3]; 7] = [

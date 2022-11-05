@@ -10,7 +10,7 @@ use self::{
 };
 
 pub mod hex_tile;
-mod vector;
+pub mod vector;
 
 const ROWS: u32 = 5;
 const COLMUNS: u32 = 5;
@@ -18,7 +18,12 @@ const COLMUNS: u32 = 5;
 #[derive(Component)]
 pub struct Hex_Map {
     mesh: Mesh,
-    tiles: Vec<Vec<Hex>>,
+    pub tiles: Vec<Vec<Hex>>,
+}
+
+#[derive(Bundle)]
+struct Map_Bundle {
+    hex_map: Hex_Map,
 }
 
 impl Hex_Map {
@@ -68,10 +73,15 @@ pub fn add_hex_map(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     let hex_map = create_tiles();
+
     commands.spawn_bundle(PbrBundle {
         mesh: meshes.add(hex_map.mesh),
         material: materials.add(Color::rgb(0.398, 0.2, 0.0).into()),
         transform: Transform::from_xyz(0.0, 0.0, 0.0),
         ..default()
+    });
+
+    commands.spawn_bundle(Map_Bundle {
+        hex_map: create_tiles(),
     });
 }

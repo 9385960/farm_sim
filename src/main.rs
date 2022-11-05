@@ -1,11 +1,13 @@
 mod hex_map;
 mod light;
 mod camera;
+mod hex_outline;
 
 use bevy::prelude::*;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use camera::add_camera;
 use hex_map::add_hex_map;
+use hex_outline::add_outline;
 use light::add_light;
 
 fn main() {

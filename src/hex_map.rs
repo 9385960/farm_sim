@@ -1,14 +1,16 @@
 use bevy::{prelude::*, render::{mesh::Indices, render_resource::PrimitiveTopology}};
+use crate::hex_outline::{self, add_outline};
+
 use self::{hex_tile::{Hex, INNER_RADIUS, OUTER_RADIUS}, vector::generate_hex_normals};
 
 mod vector;
-mod hex_tile;
+pub mod hex_tile;
 
 const ROWS : u32 = 5;
 const COLMUNS : u32 = 5;
 
 #[derive(Component)]
-struct Hex_Map{
+pub struct Hex_Map{
     mesh:Mesh,
     tiles:Vec<Vec<Hex>>,
 }
@@ -68,9 +70,10 @@ pub fn add_hex_map(
     mut materials: ResMut<Assets<StandardMaterial>>,
 )
 {
+    let hex_map = create_tiles();
     commands.spawn_bundle(PbrBundle {
-        mesh: meshes.add(create_tiles().mesh),
-        material: materials.add(Color::rgb(1.0, 0.0, 0.0).into()),
+        mesh: meshes.add(hex_map.mesh),
+        material: materials.add(Color::rgb(0.398, 0.2, 0.0).into()),
         transform : Transform::from_xyz(0.0, 0.0, 0.0),
         ..default()
     });

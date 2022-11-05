@@ -41,3 +41,13 @@ pub fn vec_addition(v1 : [f32; 3], v2: [f32;3]) -> [f32;3]
 {
     [v1[0]+v2[0],v1[1]+v2[1],v1[2]+v2[2]]
 }
+
+fn vector_multiplication(v : [f32;3], c : f32) -> [f32;3]
+{
+    [v[0]*c,v[1]*c,v[2]*c]
+}
+
+fn vector_division(v : [f32;3], c : f32) -> [f32;3]
+{
+    [v[0]/c,v[1]/c,v[2]/c]
+}

@@ -97,8 +97,8 @@ fn get_hex_verts_c(center: [f32; 3]) -> Vec<[f32; 3]> {
     let mut verts = Vec::new();
     for i in 0..6 {
         verts.push(center);
-        verts.push(vec_addition(VERTS[i],center));
-        verts.push(vec_addition(VERTS[i+1],center));
+        verts.push(vec_addition(VERTS[i], center));
+        verts.push(vec_addition(VERTS[i + 1], center));
     }
     verts
 }

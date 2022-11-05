@@ -40,14 +40,20 @@ fn create_tiles()
         }
         map.push(row);
     }
-    let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
+    let mut hex_mesh = Mesh::new(PrimitiveTopology::TriangleList);
     let mut indices = Vec::new();
     for i in 0..verts.len()
     {
         indices.push(i as u32);
     }
     let normals = generate_hex_normals(&verts);
-    mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, verts);
-    mesh.set_indices(Some(Indices::U32(indices)));
+    hex_mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, verts);
+    hex_mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
+    hex_mesh.set_indices(Some(Indices::U32(indices)));
+
+    let hex_map = Hex_Map{
+        mesh: hex_mesh,
+        tiles: map,
+    };
 }
 

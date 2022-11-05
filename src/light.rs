@@ -9,7 +9,7 @@ pub fn add_light(mut commands : Commands)
             shadows_enabled: true,
             ..default()
         },
-        transform: Transform::from_xyz(4.0, 8.0, 4.0),
+        transform: Transform::from_xyz(0.0, 8.0, 0.0),
         ..default()
     });
 }

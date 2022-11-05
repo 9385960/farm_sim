@@ -33,7 +33,11 @@ fn create_tiles() -> Hex_Map
         for j in 0..COLMUNS
         {
             let mut hex = Hex::new();
-            let position = [(i as f32) * INNER_RADIUS * 2.0, 0.0 ,(j as f32) * OUTER_RADIUS * 1.5];
+            let mut position = [0.0,0.0,0.0];
+            let x = i as i32;
+            let z = j as i32;
+            position[0] = (((x - z/2) as f32)+(z as f32)*0.5) * INNER_RADIUS * 2.0;
+            position[2] = (j as f32) * OUTER_RADIUS * 1.5;
             hex.set_center(position);
             verts.append(&mut hex.get_verts());
             row.push(hex);

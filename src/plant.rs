@@ -1,3 +1,5 @@
+mod Plant;
+
 struct Plant {
     lifetime: u16,
     plant_type: Type,

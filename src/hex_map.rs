@@ -3,7 +3,7 @@ use std::f32::consts::PI;
 use crate::hex_outline::{self, add_outline};
 use bevy::{
     prelude::{*, shape::Quad},
-    render::{mesh::{Indices, VertexAttributeValues}, render_resource::PrimitiveTopology},
+    render::{mesh::Indices, render_resource::PrimitiveTopology},
 };
 
 use self::{
@@ -14,8 +14,8 @@ use self::{
 pub mod hex_tile;
 pub mod vector;
 
-const ROWS: u32 = 7;
-const COLMUNS: u32 = 8;
+const ROWS: u32 = 5;
+const COLMUNS: u32 = 10;
 const THICKNESS: f32 = 0.1;
 
 const EDGES: [[f32; 3]; 6] = [
@@ -47,9 +47,9 @@ impl Hex_Map {
 fn create_tiles() -> Hex_Map {
     let mut verts = Vec::new();
     let mut map = Vec::new();
-    for i in 0..COLMUNS {
+    for i in 0..ROWS {
         let mut row = Vec::new();
-        for j in 0..ROWS {
+        for j in 0..COLMUNS {
             let mut hex = Hex::new();
             let mut position = [0.0, 0.0, 0.0];
             let x = i as i32;
@@ -63,20 +63,13 @@ fn create_tiles() -> Hex_Map {
         map.push(row);
     }
     let mut hex_mesh = Mesh::new(PrimitiveTopology::TriangleList);
-    let mut colors : Vec<[f32; 4]> = Vec::new();
     let mut indices = Vec::new();
     for i in 0..verts.len() {
         indices.push(i as u32);
-        if i < 18{
-            colors.push([1.0,1.0,1.0,0.0])
-        }else{
-            colors.push([1.0,0.0,1.0,0.0])
-        }
     }
     let normals = generate_hex_normals(&verts);
     hex_mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, verts);
     hex_mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
-    hex_mesh.insert_attribute(Mesh::ATTRIBUTE_COLOR, colors);
     hex_mesh.set_indices(Some(Indices::U32(indices)));
 
     let hex_map = Hex_Map {

@@ -115,8 +115,8 @@ pub fn add_hex_map(
                         ..default()
                     }),
                     transform: Transform {
-                        translation: Vec3::new(position[0],position[1],position[2]),
-                        rotation: Quat::from_euler(EulerRot::XYZ, (PI/2.0), PI, PI/2.0),
+                        translation: Vec3::new(position[0],position[1]+0.01,position[2]),
+                        rotation: Quat::from_euler(EulerRot::XYZ, (PI/2.0), PI, PI/2.0 + (PI/3.0)*(k as f32)),
                         scale: Vec3::new(1.0, 1.0, 1.0),
                     },
                     ..default()

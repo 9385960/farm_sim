@@ -23,7 +23,7 @@ impl Hex_Map{
     }
 }
 
-fn create_tiles()
+fn create_tiles() -> Hex_Map
 {
     let mut verts = Vec::new();
     let mut map = Vec::new();
@@ -55,5 +55,19 @@ fn create_tiles()
         mesh: hex_mesh,
         tiles: map,
     };
+    hex_map
 }
 
+pub fn add_hex_map(
+    mut commands : Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+)
+{
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(create_tiles().mesh),
+        material: materials.add(Color::rgb(1.0, 0.0, 0.0).into()),
+        transform : Transform::from_xyz(0.0, 0.0, 0.0),
+        ..default()
+    });
+}

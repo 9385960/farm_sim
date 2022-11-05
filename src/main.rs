@@ -1,7 +1,19 @@
 mod hex_map;
+mod light;
+mod camera;
 
 use bevy::prelude::*;
+use bevy_inspector_egui::WorldInspectorPlugin;
+use camera::add_camera;
+use hex_map::add_hex_map;
+use light::add_light;
 
 fn main() {
-    App::new().add_plugins(DefaultPlugins).run()
+    App::new()
+    .add_plugins(DefaultPlugins)
+    .add_startup_system(add_camera)
+    .add_startup_system(add_light)
+    .add_startup_system(add_hex_map)
+    .add_plugin(WorldInspectorPlugin::new())
+    .run()
 }

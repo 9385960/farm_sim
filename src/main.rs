@@ -320,15 +320,15 @@ mod menu {
 
                 parent.spawn_bundle(
                     TextBundle::from_section(
-                        "bevy",
+                        "Big Farm Tycoon",
                         TextStyle {
-                            font_size: 80.0,
+                            font_size: 60.0,
                             color: TEXT_COLOR,
                             font: asset_server.load("FiraSans-Bold.ttf"),
                         },
                     )
                     .with_style(Style {
-                        margin: UiRect::all(Val::Px(50.0)),
+                        margin: UiRect::all(Val::Px(40.0)),
                         ..default()
                     }),
                 );

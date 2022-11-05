@@ -1,3 +1,5 @@
+use std::f32::consts::PI;
+
 use bevy::{prelude::*, render::camera::ScalingMode};
 
 pub fn add_camera(mut commands: Commands) {
@@ -8,7 +10,11 @@ pub fn add_camera(mut commands: Commands) {
             ..default()
         }
         .into(),
-        transform: Transform::from_xyz(1.0, 4.0, 0.0).looking_at(Vec3::ZERO, -Vec3::Y),
+        transform: Transform{
+            translation: Vec3 { x: 0.0, y: 4.0, z: 0.0 },
+            rotation: Quat::from_euler(EulerRot::XYZ, -PI/2.0,0.0, 0.0),
+            scale: Vec3 { x: 2.5, y: 2.5, z: 2.5},
+        },
         ..Default::default()
     });
 }

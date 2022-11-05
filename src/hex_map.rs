@@ -15,7 +15,7 @@ pub mod hex_tile;
 pub mod vector;
 
 const ROWS: u32 = 5;
-const COLMUNS: u32 = 5;
+const COLMUNS: u32 = 10;
 const THICKNESS: f32 = 0.1;
 
 const EDGES: [[f32; 3]; 6] = [

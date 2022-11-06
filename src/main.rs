@@ -2,6 +2,7 @@ mod camera;
 mod hex_map;
 mod hex_outline;
 mod light;
+mod load_asset;
 mod map_keyboard;
 
 use bevy::prelude::*;
@@ -15,6 +16,7 @@ use map_keyboard::initalize_position;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .add_startup_system(load_asset::load_asset)
         .add_startup_system(add_camera)
         .add_startup_system(add_light_dir)
         .add_startup_system(add_hex_map)

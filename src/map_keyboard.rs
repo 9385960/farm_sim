@@ -103,7 +103,7 @@ pub fn add_position(
                     ev.y, ev.x
                 );
 
-                let mut cam_position = camera.get_single_mut.expect("dfajlkasd");
+                let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
 
                 if (ev.y > 0.0
                     && cam_position.translation.y >= 3.0

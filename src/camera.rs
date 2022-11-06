@@ -15,7 +15,7 @@ pub fn add_camera(mut commands: Commands) {
             translation: Vec3 {
                 x: 0.0,
                 y: 4.0,
-                z: 2.0,
+                z: 0.0,
             },
             rotation: Quat::from_euler(EulerRot::XYZ, -PI / 2.0, 0.0, 0.0),
             scale: Vec3 {

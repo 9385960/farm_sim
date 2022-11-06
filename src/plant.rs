@@ -7,7 +7,7 @@ struct Plant {
     lifetime: u16,
     plant_type: Type,
     nourishment: f32,
-    tile: Hex,
+    tile: Vec2,
 }
 
 #[derive(Debug)]
@@ -20,7 +20,7 @@ enum Type {
 }
 
 impl Plant {
-    fn new(plant_type: Type, tile: &Hex) -> Plant {
+    fn new(plant_type: Type, tile: Vec2) -> Plant {
         Plant {
             lifetime: 0,
             plant_type,
@@ -37,7 +37,7 @@ impl Plant {
         self.lifetime = l;
     }
 
-    fn set_tile(&mut self, t: &Hex) {
+    fn set_tile(&mut self, t: Vec2) {
         self.tile = t;
     }
 
@@ -49,11 +49,11 @@ impl Plant {
         self.lifetime
     }
 
-    fn get_tile(&self) -> &Hex {
+    fn get_tile(&self) -> Vec2 {
         self.tile
     }
 
-    fn get_type(&self) -> Type {
-        self.plant_type
+    fn get_type(&self) -> &Type {
+        &self.plant_type
     }
 }

@@ -50,7 +50,7 @@ fn create_tiles() -> Hex_Map {
     for i in 0..ROWS {
         let mut row = Vec::new();
         for j in 0..COLMUNS {
-            let mut hex = Hex::new();
+            let mut hex = Hex::new(i,j);
             let mut position = [0.0, 0.0, 0.0];
             let x = i as i32;
             let z = j as i32;

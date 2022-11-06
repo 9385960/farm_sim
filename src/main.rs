@@ -14,6 +14,7 @@ mod util;
 use crate::machine_update::machine_update;
 use bevy::prelude::*;
 use bevy_inspector_egui::WorldInspectorPlugin;
+use bevy_inspector_egui::egui::Order;
 use camera::add_camera;
 use hex_map::add_hex_map;
 use input_plant::add_plant;
@@ -27,6 +28,15 @@ use map_keyboard::add_position;
 use map_keyboard::initalize_position;
 use money::show_money;
 use money::text_update_system;
+
+#[derive(SystemLabel)]
+enum Ordering {
+    Input,
+    Update,
+    Delete,
+}
+
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -37,13 +47,13 @@ fn main() {
         .add_startup_system(load_plow)
         .add_startup_system(show_money)
         .add_startup_system(load_harvester)
-        .add_system(add_position)
-        .add_system(add_plant)
-        .add_system(despawn_plant)
-        .add_system(grow_plant)
-        .add_system(machine_update)
-        .add_system(add_machine_tiles)
-        .add_system(text_update_system)
+        .add_system(add_position.label(Ordering::Input).before(Ordering::Update))
+        .add_system(add_plant.label(Ordering::Input).before(Ordering::Update))
+        .add_system(despawn_plant.label(Ordering::Delete).after(Ordering::Update))
+        .add_system(grow_plant.label(Ordering::Update).before(Ordering::Delete).after(Ordering::Input))
+        .add_system(machine_update.label(Ordering::Update).before(Ordering::Delete).after(Ordering::Input))
+        .add_system(add_machine_tiles.label(Ordering::Input).before(Ordering::Update))
+        .add_system(text_update_system.label(Ordering::Update).before(Ordering::Delete).after(Ordering::Input))
         .add_plugin(WorldInspectorPlugin::new())
         .run()
 }

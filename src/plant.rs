@@ -5,11 +5,11 @@ pub struct Plant {
     lifetime: f32,
     plant_type: Type,
     nourishment: f32,
-    tile: Vec2,
+    tile: [u32;2],
 }
 
 #[derive(Debug)]
-enum Type {
+pub enum Type {
     Wheat,
     Carrot,
     Beet,
@@ -18,7 +18,7 @@ enum Type {
 }
 
 impl Plant {
-    pub fn new(plant_type: Type, tile: Vec2) -> Plant {
+    pub fn new(plant_type: Type, tile: [u32;2]) -> Plant {
         Plant {
             lifetime: 0.0,
             plant_type,
@@ -39,7 +39,7 @@ impl Plant {
         self.lifetime += time;
     }
 
-    pub fn set_tile(&mut self, t: Vec2) {
+    pub fn set_tile(&mut self, t: [u32;2]) {
         self.tile = t;
     }
 
@@ -51,7 +51,7 @@ impl Plant {
         self.lifetime
     }
 
-    pub fn get_tile(&self) -> Vec2 {
+    pub fn get_tile(&self) -> [u32;2] {
         self.tile
     }
 

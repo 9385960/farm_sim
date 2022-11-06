@@ -50,8 +50,6 @@ pub fn add_position(
                 new_position[2] + Z_OFFSET,
             );
         }
-        println!("L");
-        println!("{} {}", currentPosition.x, currentPosition.z)
     }
     if input.just_pressed(KeyCode::Right) {
         if (currentPosition.x >= 0 && currentPosition.x < ROWS - 1) {
@@ -64,8 +62,6 @@ pub fn add_position(
                 new_position[2] + Z_OFFSET,
             );
         }
-        println!("R");
-        println!("{} {}", currentPosition.x, currentPosition.z)
     }
     if input.just_pressed(KeyCode::Down) {
         if (currentPosition.z >= 0 && currentPosition.z < COLMUNS - 1) {
@@ -78,8 +74,6 @@ pub fn add_position(
                 new_position[2] + Z_OFFSET,
             );
         }
-        println!("D");
-        println!("{} {}", currentPosition.x, currentPosition.z)
     }
     if input.just_pressed(KeyCode::Up) {
         if (currentPosition.z > 0 && currentPosition.z <= COLMUNS) {
@@ -92,16 +86,11 @@ pub fn add_position(
                 new_position[2] + Z_OFFSET,
             );
         }
-        println!("U");
-        println!("{} {}", currentPosition.x, currentPosition.z)
+
     }
     for ev in scroll.iter() {
         match ev.unit {
             MouseScrollUnit::Line => {
-                println!(
-                    "Scroll (line units): vertical: {}, horizontal: {}",
-                    ev.y, ev.x
-                );
 
                 let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
 
@@ -125,10 +114,6 @@ pub fn add_position(
                 }
             }
             MouseScrollUnit::Pixel => {
-                println!(
-                    "Scroll (pixel units): vertical: {}, horizontal: {}",
-                    ev.y, ev.x
-                );
             }
         }
     }

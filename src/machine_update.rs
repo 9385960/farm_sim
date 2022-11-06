@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 const MARGINE: f32 = 0.1;
 
-use crate::{hex_map::Hex_Map, machine::Machine};
+use crate::{hex_map::Hex_Map, machine::Machine, money::MoneyText};
 
 pub fn machine_update(
     mut machine: Query<(&Parent, &mut Machine)>,
@@ -30,7 +30,6 @@ pub fn machine_update(
                             [vehicle.hex_location[1] as usize]
                             .is_planted)
                     {
-                        println!("tilled");
                         map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]
                             .tilled = true;
@@ -42,7 +41,6 @@ pub fn machine_update(
                             [vehicle.hex_location[1] as usize]
                             .is_planted)
                     {
-                        println!("harvested");
                         map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]
                             .is_planted = false;

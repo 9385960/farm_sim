@@ -4,6 +4,7 @@ mod hex_outline;
 mod light;
 mod load_asset;
 mod map_keyboard;
+mod plant;
 
 use bevy::prelude::*;
 use bevy_inspector_egui::WorldInspectorPlugin;

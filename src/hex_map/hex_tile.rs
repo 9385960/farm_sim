@@ -23,17 +23,17 @@ pub struct Hex {
     nutrients: f32,
     water: f32,
     center: [f32; 3],
-    pub index: [u32;2],
+    pub index: [u32; 2],
     pub tilled: bool,
 }
 
 impl Hex {
-    pub fn new(x : u32, z : u32) -> Hex {
+    pub fn new(x: u32, z: u32) -> Hex {
         Hex {
             nutrients: 1.0,
             water: 1.0,
             center: [0.0, 0.0, 0.0],
-            index : [x,z],
+            index: [x, z],
             tilled: false,
         }
     }

@@ -3,7 +3,6 @@ mod hex_map;
 mod hex_outline;
 mod light;
 mod map_keyboard;
-mod mouse_to_map;
 
 use bevy::prelude::*;
 use bevy_inspector_egui::WorldInspectorPlugin;

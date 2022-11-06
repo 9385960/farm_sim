@@ -1,4 +1,5 @@
 mod camera;
+mod controls;
 mod hex_map;
 mod hex_outline;
 mod input_plant;
@@ -17,6 +18,7 @@ use crate::machine_update::machine_update;
 use bevy::prelude::*;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use camera::add_camera;
+use controls::display_help;
 use hex_map::add_hex_map;
 use hex_outline::add_outline;
 use input_plant::add_plant;
@@ -40,6 +42,7 @@ fn main() {
         .add_startup_system(initalize_position)
         .add_startup_system(load_plow)
         .add_startup_system(show_money)
+        .add_startup_system(display_help)
         .add_startup_system(load_harvester)
         .add_system(add_position)
         .add_system(add_plant)

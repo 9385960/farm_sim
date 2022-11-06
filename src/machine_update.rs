@@ -1,12 +1,27 @@
-use bevy::prelude::*;
+use std::f32::consts::PI;
+
+use bevy::{prelude::*, ecs::system::Command};
+
+#[derive(Component)]
+pub struct DirtFlag{
+    pub location : [u32;2]
+}
+
+#[derive(Bundle)]
+pub struct DirtFlagBundle
+{
+    pub flag : DirtFlag,
+}
 
 const MARGINE: f32 = 0.1;
+const ROATATION_SPEED : f32 = 3.0;
 
 use crate::{hex_map::HexMap, machine::Machine};
 
 pub fn machine_update(
     mut machine: Query<(&Parent, &mut Machine)>,
     mut machine_location: Query<&mut Transform>,
+    mut commands : Commands,
     mut tiles: Query<&mut HexMap>,
     time: Res<Time>,
 ) {
@@ -33,6 +48,10 @@ pub fn machine_update(
                         map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]
                             .tilled = true;
+                        commands.spawn_bundle(DirtFlagBundle{
+                            flag : DirtFlag { location: [vehicle.hex_location[0],vehicle.hex_location[1]]
+                             }
+                        });
                     }
                 }
                 crate::machine::Model::Harvester => {
@@ -52,8 +71,18 @@ pub fn machine_update(
         } else {
             let direction = (vehicle_destination - p.translation).normalize();
             let direction = Vec3::new(direction.x, 0.0, direction.z).normalize();
-            p.translation = p.translation + direction * vehicle.speed * time.delta_seconds();
-            // p.rotation = p.rotation.lerp(end, time.delta_seconds())
+            let forward = p.forward();
+            let forward = Vec3::new(forward.x,0.0,forward.z).normalize();
+            let end = match vehicle.machine_type {
+                crate::machine::Model::Plow => Quat::from_rotation_arc(Vec3::NEG_Z,direction),
+                crate::machine::Model::Harvester => Quat::from_rotation_arc(Vec3::Z,direction),
+            };
+            match vehicle.machine_type{
+                crate::machine::Model::Plow => p.translation = p.translation + forward * vehicle.speed * time.delta_seconds(),
+                crate::machine::Model::Harvester => p.translation = p.translation + -forward * vehicle.speed * time.delta_seconds(),
+            };
+            p.rotation = p.rotation.slerp(end, time.delta_seconds()*ROATATION_SPEED);
+
         }
     }
 }

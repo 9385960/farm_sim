@@ -1,5 +1,5 @@
 use crate::{
-    hex_map::{COLMUNS, ROWS},
+    hex_map::{COLUMNS, ROWS},
     util::get_world_from_hex,
 };
 use bevy::{input::mouse::MouseScrollUnit, input::mouse::MouseWheel, prelude::*, render::camera};
@@ -63,7 +63,7 @@ pub fn add_position(
         }
     }
     if input.just_pressed(KeyCode::Down) {
-        if current_position.z >= 0 && current_position.z < COLMUNS - 1 {
+        if current_position.z >= 0 && current_position.z < COLUMNS - 1 {
             current_position.z += 1;
             let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
             let new_position = get_world_from_hex(current_position.x, current_position.z);
@@ -75,7 +75,7 @@ pub fn add_position(
         }
     }
     if input.just_pressed(KeyCode::Up) {
-        if current_position.z > 0 && current_position.z <= COLMUNS {
+        if current_position.z > 0 && current_position.z <= COLUMNS {
             current_position.z -= 1;
             let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
             let new_position = get_world_from_hex(current_position.x, current_position.z);

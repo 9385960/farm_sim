@@ -41,6 +41,7 @@ pub fn add_plant(
     if input.just_pressed(KeyCode::Space) && can_plant {
         money.remove_money(WHEAT_COST);
         tiles.tiles[selected_location.x as usize][selected_location.z as usize].is_planted = true;
+        tiles.tiles[selected_location.x as usize][selected_location.z as usize].tilled = false;
         let seedlings_gltf = server.load("seedlings.gltf#Scene0");
         let spawn_location = get_world_from_hex(selected_location.x, selected_location.z);
         let plant_bundle = commands
@@ -83,8 +84,7 @@ pub fn despawn_plant(to_despawn: Query<(&Plant, &Parent)>, mut commands: Command
         if plant.get_lifetime() > MAX_TIME {
             money.add_money(plant.get_yield());
             commands.entity(parent.get()).despawn_recursive();
-        }
-        if !hex_map.tiles[plant.get_tile()[0] as usize][plant.get_tile()[1] as usize].is_planted
+        }else if !hex_map.tiles[plant.get_tile()[0] as usize][plant.get_tile()[1] as usize].is_planted
         {
             money.add_money(plant.get_yield());
             commands.entity(parent.get()).despawn_recursive();

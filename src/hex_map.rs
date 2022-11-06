@@ -1,4 +1,4 @@
-use std::f32::consts::PI;
+use std::{f32::consts::PI};
 
 // use crate::hex_outline::{self, add_outline};
 use bevy::{
@@ -15,7 +15,7 @@ pub mod hex_tile;
 pub mod vector;
 
 pub const ROWS: u32 = 5;
-pub const COLMUNS: u32 = 10;
+pub const COLUMNS: u32 = 10;
 const THICKNESS: f32 = 0.02;
 
 const EDGES: [[f32; 3]; 6] = [
@@ -33,6 +33,9 @@ pub struct HexMap {
     pub tiles: Vec<Vec<Hex>>,
 }
 
+#[derive(Component)]
+pub struct HexMapComponent{}
+
 #[derive(Bundle)]
 struct MapBundle {
     hex_map: HexMap,
@@ -49,7 +52,7 @@ fn create_tiles() -> HexMap {
     let mut map = Vec::new();
     for i in 0..ROWS {
         let mut row = Vec::new();
-        for j in 0..COLMUNS {
+        for j in 0..COLUMNS {
             let mut hex = Hex::new(i, j);
             let mut position = [0.0, 0.0, 0.0];
             let x = i as i32;
@@ -64,12 +67,15 @@ fn create_tiles() -> HexMap {
     }
     let mut hex_mesh = Mesh::new(PrimitiveTopology::TriangleList);
     let mut indices = Vec::new();
+    let mut colors = Vec::new();
     for i in 0..verts.len() {
         indices.push(i as u32);
+        colors.push([1.0,1.0,1.0,1.0]);
     }
     let normals = generate_hex_normals(&verts);
     hex_mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, verts);
     hex_mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
+    hex_mesh.insert_attribute(Mesh::ATTRIBUTE_COLOR, colors);
     hex_mesh.set_indices(Some(Indices::U32(indices)));
 
     let hex_map = HexMap {
@@ -127,7 +133,7 @@ pub fn add_hex_map(
                         scale: Vec3::new(1.0, 1.0, 1.0),
                     },
                     ..default()
-                });
+                }).insert(HexMapComponent{});
             }
         }
     }
@@ -136,3 +142,17 @@ pub fn add_hex_map(
 fn create_quad() -> Quad {
     shape::Quad::new(Vec2::new(OUTER_RADIUS, THICKNESS))
 }
+
+// pub fn set_hex_verts(x:u32,z:u32,color:Color, mut hex_mesh: &mut Mesh)
+// {
+//     let mut vertex_colors = match hex_mesh.attribute_mut(Mesh::ATTRIBUTE_COLOR){
+//         Some(val) => val.to_owned().,
+//         None => &[[0.0,0.0,0.0]],
+//     };
+
+//     let offset = 18*x + 18*z*COLUMNS;
+//     for i in 0..18
+//     {
+//         vertex_colors[(i+offset) as usize] = [color.as_rgba_f32()[0],color.as_rgba_f32()[1],color.as_rgba_f32()[2]];
+//     }
+// }

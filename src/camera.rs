@@ -1,6 +1,6 @@
-use std::f32::consts::PI;
 
-use bevy::{prelude::*, render::camera::ScalingMode};
+
+use bevy::{prelude::*};
 
 pub fn add_camera(mut commands: Commands) {
     let proj = PerspectiveProjection {

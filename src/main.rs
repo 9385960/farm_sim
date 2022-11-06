@@ -1,9 +1,7 @@
 mod camera;
 mod hex_map;
-mod hex_outline;
 mod input_plant;
 mod light;
-mod load_asset;
 mod load_machines;
 mod machine;
 mod machine_input;
@@ -32,7 +30,6 @@ use money::text_update_system;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        // .add_startup_system(load_asset::load_asset)
         .add_startup_system(add_camera)
         .add_startup_system(add_light_dir)
         .add_startup_system(add_hex_map)
@@ -48,6 +45,5 @@ fn main() {
         .add_system(add_machine_tiles)
         .add_system(text_update_system)
         .add_plugin(WorldInspectorPlugin::new())
-        //.add_startup_system(add_outline.after(add_hex_map))
         .run()
 }

@@ -8,7 +8,7 @@ pub const WHEAT_COST:f32 = 2.5;
 pub struct Plant {
     lifetime: f32,
     plant_type: Type,
-    nourishment: f32,
+    //nourishment: f32,
     tile: [u32; 2],
     pub update: bool,
     stage: usize,
@@ -33,38 +33,38 @@ impl Plant {
         Plant {
             lifetime: 0.0,
             plant_type,
-            nourishment: 0.0,
+            //nourishment: 0.0,
             tile,
             update: false,
             stage: 0,
         }
     }
 
-    pub fn set_nourishment(&mut self, n: f32) {
-        self.nourishment = n;
-    }
+    // pub fn set_nourishment(&mut self, n: f32) {
+    //     self.nourishment = n;
+    // }
 
-    pub fn set_lifetime(&mut self, l: f32) {
-        self.lifetime = l;
-    }
+    // pub fn set_lifetime(&mut self, l: f32) {
+    //     self.lifetime = l;
+    // }
 
     pub fn increase_lifetime(&mut self, time: f32) {
         self.lifetime += time;
         if self.stage < 4 {
-            if (self.lifetime > WHEAT_GROWTH_TIME[self.stage]) {
+            if self.lifetime > WHEAT_GROWTH_TIME[self.stage] {
                 self.update = true;
                 self.stage += 1;
             }
         }
     }
 
-    pub fn set_tile(&mut self, t: [u32; 2]) {
-        self.tile = t;
-    }
+    // pub fn set_tile(&mut self, t: [u32; 2]) {
+    //     self.tile = t;
+    // }
 
-    pub fn get_nourishment(&self) -> f32 {
-        self.nourishment
-    }
+    // pub fn get_nourishment(&self) -> f32 {
+    //     self.nourishment
+    // }
 
     pub fn get_lifetime(&self) -> f32 {
         self.lifetime
@@ -78,21 +78,21 @@ impl Plant {
         &self.plant_type
     }
 
-    pub fn updated(&mut self) {
-        self.update = false;
-    }
+    // pub fn updated(&mut self) {
+    //     self.update = false;
+    // }
 
     pub fn get_yield(&self) -> f32
     {
         match &self.plant_type {
             Type::Wheat => {
-                if (self.lifetime > WHEAT_GROWTH_TIME[3]) {
+                if self.lifetime > WHEAT_GROWTH_TIME[3] {
                     return 0.0;
-                } else if (self.lifetime > WHEAT_GROWTH_TIME[2]) {
+                } else if self.lifetime > WHEAT_GROWTH_TIME[2] {
                     return 3.5;
-                } else if (self.lifetime > WHEAT_GROWTH_TIME[1]) {
+                } else if self.lifetime > WHEAT_GROWTH_TIME[1] {
                     return 2.0;
-                } else if (self.lifetime > WHEAT_GROWTH_TIME[0]) {
+                } else if self.lifetime > WHEAT_GROWTH_TIME[0] {
                     return 1.0;
                 } else {
                     return 0.0;
@@ -102,16 +102,16 @@ impl Plant {
     }
 }
 
-pub fn getPlantPath(plant: &Type, life: f32) -> &str {
+pub fn get_plant_path(plant: &Type, life: f32) -> &str {
     match plant {
         Type::Wheat => {
-            if (life > WHEAT_GROWTH_TIME[3]) {
+            if life > WHEAT_GROWTH_TIME[3] {
                 return "dead_wheat.gltf#Scene0";
-            } else if (life > WHEAT_GROWTH_TIME[2]) {
+            } else if life > WHEAT_GROWTH_TIME[2] {
                 return "ripe_wheat.gltf#Scene0";
-            } else if (life > WHEAT_GROWTH_TIME[1]) {
+            } else if life > WHEAT_GROWTH_TIME[1] {
                 return "flowering_wheat.gltf#Scene0";
-            } else if (life > WHEAT_GROWTH_TIME[0]) {
+            } else if life > WHEAT_GROWTH_TIME[0] {
                 return "sprouts.gltf#Scene0";
             } else {
                 return "";

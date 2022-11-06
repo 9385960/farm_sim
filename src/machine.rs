@@ -1,4 +1,3 @@
-use crate::hex_map::hex_tile::Hex;
 use bevy::prelude::*;
 
 #[derive(Component)]
@@ -43,9 +42,9 @@ impl Machine {
         self.destination
     }
 
-    pub fn get_hex_location(&self) -> [u32; 2] {
-        self.hex_location
-    }
+    // pub fn get_hex_location(&self) -> [u32; 2] {
+    //     self.hex_location
+    // }
 
     pub fn update_destination(&mut self) {
         if self.tiles.len() > 0 && self.action_completed {

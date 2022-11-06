@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 use bevy::prelude::*;
 
-const TEXT_COLOR: Color = Color::rgb(0.9, 0.9, 0.9);
+//const TEXT_COLOR: Color = Color::rgb(0.9, 0.9, 0.9);
 
 #[derive(Debug, Component)]
 pub struct MoneyText {
@@ -71,7 +71,7 @@ pub fn text_update_system(
     mut query: Query<&mut Text, With<MoneyText>>,
     mut amount: Query<&mut MoneyText>,
 ) {
-    let mut value = amount.get_single_mut().expect("fdsaf");
+    let value = amount.get_single_mut().expect("fdsaf");
     for mut text in &mut query {
         // Update the value of the second section
         text.sections[1].value = format!("{}", value.to_string());

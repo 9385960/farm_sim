@@ -28,23 +28,23 @@ const EDGES: [[f32; 3]; 6] = [
 ];
 
 #[derive(Component)]
-pub struct Hex_Map {
+pub struct HexMap {
     mesh: Mesh,
     pub tiles: Vec<Vec<Hex>>,
 }
 
 #[derive(Bundle)]
-struct Map_Bundle {
-    hex_map: Hex_Map,
+struct MapBundle {
+    hex_map: HexMap,
 }
 
-impl Hex_Map {
-    pub fn new(t: Vec<Vec<Hex>>, m: Mesh) -> Hex_Map {
-        Hex_Map { mesh: m, tiles: t }
-    }
+impl HexMap {
+    // pub fn new(t: Vec<Vec<Hex>>, m: Mesh) -> HexMap {
+    //     HexMap { mesh: m, tiles: t }
+    // }
 }
 
-fn create_tiles() -> Hex_Map {
+fn create_tiles() -> HexMap {
     let mut verts = Vec::new();
     let mut map = Vec::new();
     for i in 0..ROWS {
@@ -72,7 +72,7 @@ fn create_tiles() -> Hex_Map {
     hex_mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
     hex_mesh.set_indices(Some(Indices::U32(indices)));
 
-    let hex_map = Hex_Map {
+    let hex_map = HexMap {
         mesh: hex_mesh,
         tiles: map,
     };
@@ -98,7 +98,7 @@ pub fn add_hex_map(
         ..default()
     });
 
-    commands.spawn_bundle(Map_Bundle {
+    commands.spawn_bundle(MapBundle {
         hex_map: create_tiles(),
     });
 
@@ -120,7 +120,7 @@ pub fn add_hex_map(
                         translation: Vec3::new(position[0], position[1] + 0.01, position[2]),
                         rotation: Quat::from_euler(
                             EulerRot::XYZ,
-                            (PI / 2.0),
+                            PI / 2.0,
                             PI,
                             PI / 2.0 + (PI / 3.0) * (k as f32),
                         ),

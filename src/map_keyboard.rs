@@ -24,26 +24,25 @@ pub struct PositionBundle {
 }
 
 pub fn initalize_position(mut commands: Commands) {
-    let mut currentPosition = Position::new();
+    let current_position = Position::new();
     commands.spawn_bundle(PositionBundle {
-        bundle: currentPosition,
+        bundle: current_position,
     });
 }
 
 pub fn add_position(
-    mut input: Res<Input<KeyCode>>,
+    input: Res<Input<KeyCode>>,
     mut scroll: EventReader<MouseWheel>,
-    mut commands: Commands,
-    mut currentPosition: Query<&mut Position>,
+    mut current_position: Query<&mut Position>,
     mut camera: Query<&mut Transform, With<camera::Camera>>,
 ) {
-    let mut currentPosition = currentPosition.get_single_mut().expect("dfajlkasd");
+    let mut current_position = current_position.get_single_mut().expect("dfajlkasd");
 
     if input.just_pressed(KeyCode::Left) {
-        if (currentPosition.x > 0 && currentPosition.x <= ROWS) {
-            currentPosition.x -= 1;
+        if current_position.x > 0 && current_position.x <= ROWS {
+            current_position.x -= 1;
             let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
-            let new_position = get_world_from_hex(currentPosition.x, currentPosition.z);
+            let new_position = get_world_from_hex(current_position.x, current_position.z);
             cam_position.translation = Vec3::new(
                 new_position[0],
                 cam_position.translation.y,
@@ -52,10 +51,10 @@ pub fn add_position(
         }
     }
     if input.just_pressed(KeyCode::Right) {
-        if (currentPosition.x >= 0 && currentPosition.x < ROWS - 1) {
-            currentPosition.x += 1;
+        if current_position.x >= 0 && current_position.x < ROWS - 1 {
+            current_position.x += 1;
             let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
-            let new_position = get_world_from_hex(currentPosition.x, currentPosition.z);
+            let new_position = get_world_from_hex(current_position.x, current_position.z);
             cam_position.translation = Vec3::new(
                 new_position[0],
                 cam_position.translation.y,
@@ -64,10 +63,10 @@ pub fn add_position(
         }
     }
     if input.just_pressed(KeyCode::Down) {
-        if (currentPosition.z >= 0 && currentPosition.z < COLMUNS - 1) {
-            currentPosition.z += 1;
+        if current_position.z >= 0 && current_position.z < COLMUNS - 1 {
+            current_position.z += 1;
             let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
-            let new_position = get_world_from_hex(currentPosition.x, currentPosition.z);
+            let new_position = get_world_from_hex(current_position.x, current_position.z);
             cam_position.translation = Vec3::new(
                 new_position[0],
                 cam_position.translation.y,
@@ -76,10 +75,10 @@ pub fn add_position(
         }
     }
     if input.just_pressed(KeyCode::Up) {
-        if (currentPosition.z > 0 && currentPosition.z <= COLMUNS) {
-            currentPosition.z -= 1;
+        if current_position.z > 0 && current_position.z <= COLMUNS {
+            current_position.z -= 1;
             let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
-            let new_position = get_world_from_hex(currentPosition.x, currentPosition.z);
+            let new_position = get_world_from_hex(current_position.x, current_position.z);
             cam_position.translation = Vec3::new(
                 new_position[0],
                 cam_position.translation.y,
@@ -97,19 +96,19 @@ pub fn add_position(
                 const LOWER_BOUND: f32 = 3.0;
                 const UPPER_BOUND: f32 = 6.0;
 
-                if (ev.y > 0.0
+                if ev.y > 0.0
                     && cam_position.translation.y >= LOWER_BOUND
-                    && cam_position.translation.y <= UPPER_BOUND)
+                    && cam_position.translation.y <= UPPER_BOUND
                 {
                     cam_position.translation.y -= 0.1;
-                } else if (ev.y < 0.0
+                } else if ev.y < 0.0
                     && cam_position.translation.y >= LOWER_BOUND
-                    && cam_position.translation.y <= UPPER_BOUND)
+                    && cam_position.translation.y <= UPPER_BOUND
                 {
                     cam_position.translation.y += 0.1;
-                } else if (cam_position.translation.y < UPPER_BOUND) {
+                } else if cam_position.translation.y < UPPER_BOUND {
                     cam_position.translation.y = LOWER_BOUND
-                } else if (cam_position.translation.y > UPPER_BOUND) {
+                } else if cam_position.translation.y > UPPER_BOUND {
                     cam_position.translation.y = UPPER_BOUND
                 }
             }

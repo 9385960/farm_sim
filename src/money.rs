@@ -1,4 +1,4 @@
-use std::fmt::{self, Debug, Formatter};
+use std::fmt::{self, Debug, Display, Formatter};
 
 use bevy::prelude::*;
 
@@ -20,6 +20,12 @@ impl MoneyText {
 
     pub fn remove_money(&mut self, value: f32) {
         self.amount -= value;
+    }
+}
+
+impl ToString for MoneyText {
+    fn to_string(&self) -> String {
+        format!("{:#?}", self.amount)
     }
 }
 
@@ -63,6 +69,6 @@ pub fn text_update_system(
     let mut value = amount.get_single_mut().expect("fdsaf");
     for mut text in &mut query {
         // Update the value of the second section
-        text.sections[1].value = format!("{:#?}", value);
+        text.sections[1].value = format!("{}", value.to_string());
     }
 }

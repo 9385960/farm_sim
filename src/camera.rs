@@ -10,12 +10,19 @@ pub fn add_camera(mut commands: Commands) {
     };
 
     let bundle = Camera3dBundle {
-        projection: proj
-        .into(),
-        transform: Transform{
-            translation: Vec3 { x: 0.0, y: 4.0, z: 2.0 },
-            rotation: Quat::from_euler(EulerRot::XYZ, -PI/2.0,0.0, 0.0),
-            scale: Vec3 { x: 1.0, y: 1.0, z: 1.0},
+        projection: proj.into(),
+        transform: Transform {
+            translation: Vec3 {
+                x: 0.0,
+                y: 4.0,
+                z: 2.0,
+            },
+            rotation: Quat::from_euler(EulerRot::XYZ, -PI / 2.0, 0.0, 0.0),
+            scale: Vec3 {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+            },
         },
         ..Default::default()
     };

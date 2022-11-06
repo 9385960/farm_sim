@@ -1,5 +1,5 @@
 use crate::hex_map::{COLMUNS, ROWS};
-use bevy::prelude::*;
+use bevy::{prelude::*, render::camera};
 
 #[derive(Component, Clone, Copy)]
 pub struct Position {
@@ -29,12 +29,14 @@ pub fn add_position(
     mut input: Res<Input<KeyCode>>,
     mut commands: Commands,
     mut currentPosition: Query<&mut Position>,
+    mut camera: Query<&mut Transform, With<camera::Camera>>,
 ) {
     let mut currentPosition = currentPosition.get_single_mut().expect("dfajlkasd");
 
     if input.just_pressed(KeyCode::Left) {
         if (currentPosition.x > 0 && currentPosition.x <= ROWS) {
             currentPosition.x -= 1;
+            camera.get_single_mut().expect("dfajlkasd").translation.x -= 1.0;
         }
         println!("L");
         println!("{} {}", currentPosition.x, currentPosition.y)
@@ -42,6 +44,7 @@ pub fn add_position(
     if input.just_pressed(KeyCode::Right) {
         if (currentPosition.x >= 0 && currentPosition.x < ROWS) {
             currentPosition.x += 1;
+            camera.get_single_mut().expect("dfajlkasd").translation.x += 1.0;
         }
         println!("R");
         println!("{} {}", currentPosition.x, currentPosition.y)
@@ -49,6 +52,7 @@ pub fn add_position(
     if input.just_pressed(KeyCode::Up) {
         if (currentPosition.y >= 0 && currentPosition.y < COLMUNS) {
             currentPosition.y += 1;
+            camera.get_single_mut().expect("dfajlkasd").translation.z -= 1.0;
         }
         println!("U");
         println!("{} {}", currentPosition.x, currentPosition.y)
@@ -56,6 +60,7 @@ pub fn add_position(
     if input.just_pressed(KeyCode::Down) {
         if (currentPosition.y > 0 && currentPosition.y <= COLMUNS) {
             currentPosition.y -= 1;
+            camera.get_single_mut().expect("dfajlkasd").translation.z += 1.0;
         }
         println!("D");
         println!("{} {}", currentPosition.x, currentPosition.y)

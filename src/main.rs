@@ -9,6 +9,7 @@ mod machine;
 mod machine_input;
 mod machine_update;
 mod map_keyboard;
+mod money;
 mod plant;
 mod util;
 
@@ -27,6 +28,8 @@ use load_machines::load_plow;
 use machine_input::add_machine_tiles;
 use map_keyboard::add_position;
 use map_keyboard::initalize_position;
+use money::show_money;
+use money::text_update_system;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -36,6 +39,7 @@ fn main() {
         .add_startup_system(add_hex_map)
         .add_startup_system(initalize_position)
         .add_startup_system(load_plow)
+        .add_startup_system(show_money)
         .add_startup_system(load_harvester)
         .add_system(add_position)
         .add_system(add_plant)
@@ -43,6 +47,7 @@ fn main() {
         .add_system(grow_plant)
         .add_system(machine_update)
         .add_system(add_machine_tiles)
+        .add_system(text_update_system)
         .add_plugin(WorldInspectorPlugin::new())
         //.add_startup_system(add_outline.after(add_hex_map))
         .run()

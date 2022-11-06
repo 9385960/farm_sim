@@ -10,6 +10,7 @@ mod machine_input;
 mod machine_update;
 mod map_keyboard;
 mod plant;
+mod util;
 
 use crate::machine_update::machine_update;
 use bevy::prelude::*;

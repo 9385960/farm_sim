@@ -9,6 +9,7 @@ mod machine;
 mod machine_input;
 mod machine_update;
 mod map_keyboard;
+mod money;
 mod plant;
 mod util;
 

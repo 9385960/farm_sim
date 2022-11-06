@@ -103,22 +103,25 @@ pub fn add_position(
                     ev.y, ev.x
                 );
 
-                let mut cam_position = camera.get_single_mut.expect("dfajlkasd");
+                let mut cam_position = camera.get_single_mut().expect("dfajlkasd");
+
+                const LOWER_BOUND: f32 = 3.0;
+                const UPPER_BOUND: f32 = 6.0;
 
                 if (ev.y > 0.0
-                    && cam_position.translation.y >= 3.0
-                    && cam_position.translation.y <= 6.0)
+                    && cam_position.translation.y >= LOWER_BOUND
+                    && cam_position.translation.y <= UPPER_BOUND)
                 {
                     cam_position.translation.y -= 0.1;
                 } else if (ev.y < 0.0
-                    && cam_position.translation.y >= 3.0
-                    && cam_position.translation.y <= 6.0)
+                    && cam_position.translation.y >= LOWER_BOUND
+                    && cam_position.translation.y <= UPPER_BOUND)
                 {
                     cam_position.translation.y += 0.1;
-                } else if (cam_position.translation.y < 6.0) {
-                    cam_position.translation.y = 6.0
-                } else if (cam_position.translation.y > 6.0) {
-                    cam_position.translation.y = 6.0
+                } else if (cam_position.translation.y < UPPER_BOUND) {
+                    cam_position.translation.y = LOWER_BOUND
+                } else if (cam_position.translation.y > UPPER_BOUND) {
+                    cam_position.translation.y = UPPER_BOUND
                 }
             }
             MouseScrollUnit::Pixel => {

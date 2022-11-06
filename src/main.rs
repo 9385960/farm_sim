@@ -13,6 +13,8 @@ use camera::add_camera;
 use hex_map::add_hex_map;
 use hex_outline::add_outline;
 use input_plant::add_plant;
+use input_plant::despawn_plant;
+use input_plant::grow_plant;
 use light::{add_light, add_light_dir};
 use map_keyboard::add_position;
 use map_keyboard::initalize_position;
@@ -26,6 +28,8 @@ fn main() {
         .add_startup_system(initalize_position)
         .add_system(add_position)
         .add_system(add_plant)
+        .add_system(despawn_plant)
+        .add_system(grow_plant)
         .add_plugin(WorldInspectorPlugin::new())
         //.add_startup_system(add_outline.after(add_hex_map))
         .run()

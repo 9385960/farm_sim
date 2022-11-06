@@ -8,8 +8,8 @@ const Z_OFFSET: f32 = 3.0;
 
 #[derive(Component, Clone, Copy)]
 pub struct Position {
-    x: u32,
-    z: u32,
+    pub x: u32,
+    pub z: u32,
 }
 
 impl Position {

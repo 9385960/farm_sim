@@ -1,12 +1,10 @@
 use bevy::{ecs::entity, prelude::*};
 
 use crate::{
-    hex_map::{
-        hex_tile::{INNER_RADIUS, OUTER_RADIUS},
-        Hex_Map,
-    },
+    hex_map::Hex_Map,
     map_keyboard::Position,
     plant::{getPlantPath, Plant, PlantBundle, MAX_TIME},
+    util::get_world_from_hex,
 };
 
 pub fn add_plant(
@@ -14,7 +12,7 @@ pub fn add_plant(
     mut input: Res<Input<KeyCode>>,
     mut selected_location: Query<&Position>,
     mut plant_components: Query<&mut Plant>,
-    mut tiles: Query<&Hex_Map>,
+    mut tiles: Query<&mut Hex_Map>,
     time: Res<Time>,
     server: Res<AssetServer>,
 ) {
@@ -22,6 +20,7 @@ pub fn add_plant(
     let selected_location = selected_location.get_single().expect("dfad");
     for mut plant in plant_components.iter_mut() {
         plant.increase_lifetime(time.delta_seconds());
+
         if (plant.get_tile()[0] == selected_location.x
             && plant.get_tile()[1] == selected_location.z)
         {
@@ -29,12 +28,15 @@ pub fn add_plant(
         }
     }
 
-    let tiles = tiles.get_single().expect("dfa");
-    if !(tiles.tiles[selected_location.x as usize][selected_location.z as usize]).tilled {
+    let mut tiles = tiles.get_single_mut().expect("dfa");
+    if !(tiles.tiles[selected_location.x as usize][selected_location.z as usize]).tilled
+        && (tiles.tiles[selected_location.x as usize][selected_location.z as usize]).is_planted
+    {
         canPlant = false;
     }
 
     if input.just_pressed(KeyCode::Space) && canPlant {
+        tiles.tiles[selected_location.x as usize][selected_location.z as usize].is_planted = true;
         let seedlings_gltf = server.load("seedlings.gltf#Scene0");
         let spawn_location = get_world_from_hex(selected_location.x, selected_location.z);
         let plant_bundle = commands
@@ -68,20 +70,16 @@ pub fn add_plant(
 
         commands.entity(mesh).push_children(&[plant_bundle]);
     }
-
-    fn get_world_from_hex(x: u32, z: u32) -> [f32; 3] {
-        let mut position = [0.0, 0.0, 0.0];
-        let x = x as i32;
-        let z = z as i32;
-        position[0] = (((x - z / 2) as f32) + (z as f32) * 0.5) * INNER_RADIUS * 2.0;
-        position[2] = (z as f32) * OUTER_RADIUS * 1.5;
-        position
-    }
 }
 
-pub fn despawn_plant(to_despawn: Query<(&Plant, &Parent)>, mut commands: Commands) {
+pub fn despawn_plant(to_despawn: Query<(&Plant, &Parent)>, mut commands: Commands,tiles: Query<& Hex_Map>,) {
+    let hex_map = tiles.get_single().expect("despawn map");
     for (plant, parent) in &to_despawn {
         if plant.get_lifetime() > MAX_TIME {
+            commands.entity(parent.get()).despawn_recursive();
+        }
+        if(!hex_map.tiles[plant.get_tile()[0] as usize][plant.get_tile()[1] as usize].is_planted)
+        {
             commands.entity(parent.get()).despawn_recursive();
         }
     }

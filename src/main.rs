@@ -9,8 +9,8 @@ mod machine;
 mod machine_input;
 mod machine_update;
 mod map_keyboard;
-mod money;
 mod plant;
+mod util;
 
 use crate::machine_update::machine_update;
 use bevy::prelude::*;
@@ -22,6 +22,7 @@ use input_plant::add_plant;
 use input_plant::despawn_plant;
 use input_plant::grow_plant;
 use light::{add_light, add_light_dir};
+use load_machines::load_harvester;
 use load_machines::load_plow;
 use machine_input::add_machine_tiles;
 use map_keyboard::add_position;
@@ -38,6 +39,7 @@ fn main() {
         .add_startup_system(initalize_position)
         .add_startup_system(load_plow)
         .add_startup_system(show_money)
+        .add_startup_system(load_harvester)
         .add_system(add_position)
         .add_system(add_plant)
         .add_system(despawn_plant)

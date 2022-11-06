@@ -2,6 +2,7 @@ use bevy::prelude::*;
 
 pub const MAX_TIME: f32 = 30.0;
 pub const WHEAT_GROWTH_TIME: [f32; 4] = [5.0, 10.0, 15.0, 20.0];
+pub const WHEAT_COST:f32 = 2.5;
 
 #[derive(Component)]
 pub struct Plant {
@@ -80,11 +81,30 @@ impl Plant {
     pub fn updated(&mut self) {
         self.update = false;
     }
+
+    pub fn get_yield(&self) -> f32
+    {
+        match &self.plant_type {
+            Type::Wheat => {
+                if (self.lifetime > WHEAT_GROWTH_TIME[3]) {
+                    return 0.0;
+                } else if (self.lifetime > WHEAT_GROWTH_TIME[2]) {
+                    return 3.5;
+                } else if (self.lifetime > WHEAT_GROWTH_TIME[1]) {
+                    return 2.0;
+                } else if (self.lifetime > WHEAT_GROWTH_TIME[0]) {
+                    return 1.0;
+                } else {
+                    return 0.0;
+                }
+            }
+        }
+    }
 }
 
 pub fn getPlantPath(plant: &Type, life: f32) -> &str {
-    match Type::Wheat {
-        Wheat => {
+    match plant {
+        Type::Wheat => {
             if (life > WHEAT_GROWTH_TIME[3]) {
                 return "dead_wheat.gltf#Scene0";
             } else if (life > WHEAT_GROWTH_TIME[2]) {

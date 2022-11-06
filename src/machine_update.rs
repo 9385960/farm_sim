@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 const MARGINE: f32 = 0.1;
 
-use crate::{hex_map::Hex_Map, machine::Machine};
+use crate::{hex_map::Hex_Map, machine::Machine, money::MoneyText};
 
 pub fn machine_update(
     mut machine: Query<(&Parent, &mut Machine)>,

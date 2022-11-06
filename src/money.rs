@@ -14,6 +14,11 @@ impl MoneyText {
         MoneyText { amount: 100.0 }
     }
 
+    pub fn get_money(&self) -> f32
+    {
+        self.amount
+    }
+
     pub fn add_money(&mut self, value: f32) {
         self.amount += value;
     }

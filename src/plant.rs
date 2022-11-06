@@ -18,7 +18,7 @@ enum Type {
 }
 
 impl Plant {
-    fn new(plant_type: Type, tile: Vec2) -> Plant {
+    pub fn new(plant_type: Type, tile: Vec2) -> Plant {
         Plant {
             lifetime: 0.0,
             plant_type,
@@ -27,36 +27,36 @@ impl Plant {
         }
     }
 
-    fn set_nourishment(&mut self, n: f32) {
+    pub fn set_nourishment(&mut self, n: f32) {
         self.nourishment = n;
     }
 
-    fn set_lifetime(&mut self, l: f32) {
+    pub fn set_lifetime(&mut self, l: f32) {
         self.lifetime = l;
     }
 
-    fn increase_lifetime(&mut self, time: f32)
+    pub fn increase_lifetime(&mut self, time: f32)
     {
         self.lifetime += time;
     }
 
-    fn set_tile(&mut self, t: Vec2) {
+    pub pub fn set_tile(&mut self, t: Vec2) {
         self.tile = t;
     }
 
-    fn get_nourishment(&self) -> f32 {
+    pub fn get_nourishment(&self) -> f32 {
         self.nourishment
     }
 
-    fn get_lifetime(&self) -> f32 {
+    pub fn get_lifetime(&self) -> f32 {
         self.lifetime
     }
 
-    fn get_tile(&self) -> Vec2 {
+    pub fn get_tile(&self) -> Vec2 {
         self.tile
     }
 
-    fn get_type(&self) -> &Type {
+    pub fn get_type(&self) -> &Type {
         &self.plant_type
     }
 }

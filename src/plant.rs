@@ -1,10 +1,8 @@
 use bevy::prelude::*;
 
-use crate::hex_map::hex_tile::Hex;
-
 #[derive(Component)]
 struct Plant {
-    lifetime: u16,
+    lifetime: f32,
     plant_type: Type,
     nourishment: f32,
     tile: Vec2,
@@ -22,7 +20,7 @@ enum Type {
 impl Plant {
     fn new(plant_type: Type, tile: Vec2) -> Plant {
         Plant {
-            lifetime: 0,
+            lifetime: 0.0,
             plant_type,
             nourishment: 0.0,
             tile,
@@ -33,8 +31,13 @@ impl Plant {
         self.nourishment = n;
     }
 
-    fn set_lifetime(&mut self, l: u16) {
+    fn set_lifetime(&mut self, l: f32) {
         self.lifetime = l;
+    }
+
+    fn increase_lifetime(&mut self, time: f32)
+    {
+        self.lifetime += time;
     }
 
     fn set_tile(&mut self, t: Vec2) {
@@ -45,7 +48,7 @@ impl Plant {
         self.nourishment
     }
 
-    fn get_lifetime(&self) -> u16 {
+    fn get_lifetime(&self) -> f32 {
         self.lifetime
     }
 

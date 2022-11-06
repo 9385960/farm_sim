@@ -7,7 +7,7 @@ struct Plant {
     lifetime: u16,
     plant_type: Type,
     nourishment: f32,
-    tile: & Hex,
+    tile: Hex,
 }
 
 #[derive(Debug)]

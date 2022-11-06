@@ -35,12 +35,11 @@ impl Plant {
         self.lifetime = l;
     }
 
-    pub fn increase_lifetime(&mut self, time: f32)
-    {
+    pub fn increase_lifetime(&mut self, time: f32) {
         self.lifetime += time;
     }
 
-    pub pub fn set_tile(&mut self, t: Vec2) {
+    pub fn set_tile(&mut self, t: Vec2) {
         self.tile = t;
     }
 

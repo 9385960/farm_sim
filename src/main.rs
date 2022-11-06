@@ -13,8 +13,8 @@ mod util;
 
 use crate::machine_update::machine_update;
 use bevy::prelude::*;
-use bevy_inspector_egui::WorldInspectorPlugin;
-use bevy_inspector_egui::egui::Order;
+// use bevy_inspector_egui::WorldInspectorPlugin;
+// use bevy_inspector_egui::egui::Order;
 use camera::add_camera;
 use hex_map::add_hex_map;
 use input_plant::add_plant;
@@ -54,6 +54,6 @@ fn main() {
         .add_system(machine_update.label(Ordering::Update).before(Ordering::Delete).after(Ordering::Input))
         .add_system(add_machine_tiles.label(Ordering::Input).before(Ordering::Update))
         .add_system(text_update_system.label(Ordering::Update).before(Ordering::Delete).after(Ordering::Input))
-        .add_plugin(WorldInspectorPlugin::new())
+        //.add_plugin(WorldInspectorPlugin::new())
         .run()
 }

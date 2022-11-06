@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 const MARGINE: f32 = 0.1;
 
-use crate::{hex_map::Hex_Map, machine::Machine, money::MoneyText};
+use crate::{hex_map::Hex_Map, machine::Machine};
 
 pub fn machine_update(
     mut machine: Query<(&Parent, &mut Machine)>,
@@ -19,16 +19,16 @@ pub fn machine_update(
             vehicle_destination[2],
         );
         let mut p = machine_location.get_mut(parent.get()).expect("vehicle");
-        if ((p.translation - vehicle_destination).length() < MARGINE) {
+        if (p.translation - vehicle_destination).length() < MARGINE {
             match vehicle.machine_type {
                 crate::machine::Model::Plow => {
-                    if (!vehicle.action_completed
+                    if !vehicle.action_completed
                         && !map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]
                             .tilled
                         && !map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]
-                            .is_planted)
+                            .is_planted
                     {
                         map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]
@@ -36,10 +36,10 @@ pub fn machine_update(
                     }
                 }
                 crate::machine::Model::Harvester => {
-                    if (!vehicle.action_completed
+                    if !vehicle.action_completed
                         && map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]
-                            .is_planted)
+                            .is_planted
                     {
                         map.tiles[vehicle.hex_location[0] as usize]
                             [vehicle.hex_location[1] as usize]

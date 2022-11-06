@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 
 use crate::machine::{Machine, MachineBundle, Model};
-use crate::machine::{Machine, MachineBundle, Model};
 
 pub fn load_plow(mut commands: Commands, server: Res<AssetServer>) {
     let plow_gltf = server.load("plow.gltf#Scene0");

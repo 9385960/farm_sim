@@ -23,6 +23,7 @@ pub struct Hex {
     nutrients: f32,
     water: f32,
     center: [f32; 3],
+    pub tilled: bool,
 }
 
 impl Hex {
@@ -31,6 +32,7 @@ impl Hex {
             nutrients: 1.0,
             water: 1.0,
             center: [0.0, 0.0, 0.0],
+            tilled: false,
         }
     }
 

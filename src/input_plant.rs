@@ -1,7 +1,10 @@
 use bevy::{ecs::entity, prelude::*};
 
 use crate::{
-    hex_map::hex_tile::{INNER_RADIUS, OUTER_RADIUS},
+    hex_map::{
+        hex_tile::{INNER_RADIUS, OUTER_RADIUS},
+        Hex_Map,
+    },
     map_keyboard::Position,
     plant::{getPlantPath, Plant, PlantBundle, MAX_TIME},
 };
@@ -11,6 +14,7 @@ pub fn add_plant(
     mut input: Res<Input<KeyCode>>,
     mut selected_location: Query<&Position>,
     mut plant_components: Query<&mut Plant>,
+    mut tiles: Query<&Hex_Map>,
     time: Res<Time>,
     server: Res<AssetServer>,
 ) {
@@ -25,8 +29,12 @@ pub fn add_plant(
         }
     }
 
+    let tiles = tiles.get_single().expect("dfa");
+    if !(tiles.tiles[selected_location.x as usize][selected_location.z as usize]).tilled {
+        canPlant = false;
+    }
+
     if input.just_pressed(KeyCode::Space) && canPlant {
-        println!("test");
         let seedlings_gltf = server.load("seedlings.gltf#Scene0");
         let spawn_location = get_world_from_hex(selected_location.x, selected_location.z);
         let plant_bundle = commands
@@ -88,11 +96,12 @@ pub fn grow_plant(
 ) {
     for (mut mesh, plant) in scene_plant.iter_mut() {
         for (plant_id) in plant.iter() {
-            let plant_component = plant_components.get(*plant_id);
+            let plant_component = plant_components.get_mut(*plant_id);
             match plant_component {
-                Ok(p) => {
+                Ok(mut p) => {
                     if p.update {
                         *mesh = server.load(getPlantPath(p.get_type(), p.get_lifetime()));
+                        p.update = false;
                     }
                 }
                 Err(_) => (),

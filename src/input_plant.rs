@@ -29,8 +29,8 @@ pub fn add_plant(
     }
 
     let mut tiles = tiles.get_single_mut().expect("dfa");
-    if !(tiles.tiles[selected_location.x as usize][selected_location.z as usize]).tilled
-        && (tiles.tiles[selected_location.x as usize][selected_location.z as usize]).is_planted
+    if (!((tiles.tiles[selected_location.x as usize][selected_location.z as usize]).tilled)
+        || (tiles.tiles[selected_location.x as usize][selected_location.z as usize]).is_planted)
     {
         canPlant = false;
     }

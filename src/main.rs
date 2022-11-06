@@ -9,8 +9,11 @@ mod plant;
 mod machine;
 mod load_machines;
 mod machine_update;
+mod machine_input;
 
 use bevy::prelude::*;
+use machine_input::add_machine_tiles;
+use crate::machine_update::machine_update;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use camera::add_camera;
 use hex_map::add_hex_map;
@@ -35,6 +38,8 @@ fn main() {
         .add_system(add_plant)
         .add_system(despawn_plant)
         .add_system(grow_plant)
+        .add_system(machine_update)
+        .add_system(add_machine_tiles)
         .add_plugin(WorldInspectorPlugin::new())
         //.add_startup_system(add_outline.after(add_hex_map))
         .run()

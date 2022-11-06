@@ -3,10 +3,10 @@ use crate::hex_map::hex_tile::Hex;
 
 #[derive(Component)]
 pub struct Machine {
-    speed: f32,
+    pub speed: f32,
     machine_type: Model,
-    tiles: Vec<Hex>,
-    hex_location : [u32;2],
+    tiles: Vec<([f32;3],[u32;2])>,
+    pub hex_location : [u32;2],
     destination: [f32;3],
 }
 
@@ -35,7 +35,7 @@ impl Machine{
         }
     }
 
-    pub fn add_hex(&mut self,tile:Hex)
+    pub fn add_hex(&mut self,tile:([f32;3],[u32;2]))
     {
         self.tiles.push(tile)
     }
@@ -54,8 +54,8 @@ impl Machine{
     {
         if self.tiles.len() > 0
         {
-            self.destination = self.tiles[0].get_center();
-            self.hex_location = self.tiles[0].index;
+            self.destination = self.tiles[0].0;
+            self.hex_location = self.tiles[0].1;
             self.tiles.remove(0);
         }
     }

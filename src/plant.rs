@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 #[derive(Component)]
-struct Plant {
+pub struct Plant {
     lifetime: f32,
     plant_type: Type,
     nourishment: f32,

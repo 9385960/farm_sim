@@ -88,7 +88,12 @@ pub fn add_hex_map(
 
     commands.spawn_bundle(PbrBundle {
         mesh: meshes.add(hex_map.mesh),
-        material: materials.add(Color::rgb(0.398, 0.2, 0.0).into()),
+        material: materials.add(StandardMaterial {
+            base_color: Color::rgb(0.398, 0.2, 0.0),
+            alpha_mode: AlphaMode::Blend,
+            perceptual_roughness: 0.7,
+            ..default()
+        }),
         transform: Transform::from_xyz(0.0, 0.0, 0.0),
         ..default()
     });

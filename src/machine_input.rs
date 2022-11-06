@@ -14,7 +14,6 @@ pub fn add_machine_tiles(
                 let tiles = tiles.get_single().expect("Tile");
                 let selected_location = selected_location.get_single().expect("Location");
                 if (input.just_pressed(KeyCode::B)) {
-                    println!("Tile Added Plow");
                     let tile =
                         &tiles.tiles[selected_location.x as usize][selected_location.z as usize];
                     vehicle.add_hex((
@@ -27,7 +26,6 @@ pub fn add_machine_tiles(
                 let tiles = tiles.get_single().expect("Tile");
                 let selected_location = selected_location.get_single().expect("Location");
                 if (input.just_pressed(KeyCode::H)) {
-                    println!("Tile Added Harvester");
                     let tile =
                         &tiles.tiles[selected_location.x as usize][selected_location.z as usize];
                     vehicle.add_hex((

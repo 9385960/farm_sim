@@ -25,6 +25,6 @@ Link to the Devpost:
   - Ripe
   - Overripe
 - A money system
-  - Use for buying seeds
+  - Used for buying seeds
 - A yield system 
   - You will get different amounts of money depending at what phase you harvest at
